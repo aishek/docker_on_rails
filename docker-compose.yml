@@ -9,6 +9,13 @@ services:
     ports:
       - 5432:5432
 
+  redis:
+    image: redis:latest
+    volumes:
+      - redis:/data
+    ports:
+      - 6379:6379
+
   rails:
     build:
       context: .
@@ -31,6 +38,7 @@ services:
       - NODE_ENV=development
       - RAILS_ENV=${RAILS_ENV:-development}
       - DATABASE_URL=postgres://postgres:postgres@postgres:5432/docker_on_rails_development?pool=5
+      - REDIS_URL=redis://redis:6379
       - BOOTSNAP_CACHE_DIR=/bundle/bootsnap
       - WEBPACKER_DEV_SERVER_HOST=webpacker
       - WEB_CONCURRENCY=1
@@ -39,6 +47,7 @@ services:
       - EDITOR=vi
     depends_on:
       - postgres
+      - redis
 
   webpacker:
     build:
@@ -68,3 +77,4 @@ volumes:
   node_modules:
   bundle:
   packs:
+  redis:

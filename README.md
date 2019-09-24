@@ -12,3 +12,5 @@
 
   bundle exec rails g scaffold post title:string body:text published:boolean
   bundle exec rails db:migrate
+
+  bundle exec rails dev:cache
